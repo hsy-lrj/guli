@@ -60,7 +60,7 @@ public class EduTeacherController {
      * @return
      */
     @ApiOperation(value = "根据ID逻辑删除讲师")
-    @DeleteMapping("{id}")
+    @DeleteMapping("removeteacher/{id}")
     public result removeById(
             @ApiParam(name = "id", value = "讲师ID", required = true)
             @PathVariable String id) {
@@ -137,6 +137,8 @@ public class EduTeacherController {
         if (!StringUtils.isEmpty(end)) {
             queryWrapper.le("gmt_create", end);
         }
+        //排序
+        queryWrapper.orderByDesc("gmt_create");
         //调用方法
         IPage<EduTeacher> teacherIPage = teacherService.page(p, queryWrapper);
         long total = teacherIPage.getTotal();
@@ -154,7 +156,7 @@ public class EduTeacherController {
      * @return
      */
     @ApiOperation(value = "新增讲师")
-    @PostMapping
+    @PostMapping("/save")
     public result save(
             @ApiParam(name = "teacher", value = "讲师对象", required = true)
             @RequestBody EduTeacher teacher) {
