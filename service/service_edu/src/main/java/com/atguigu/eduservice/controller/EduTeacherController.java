@@ -37,6 +37,19 @@ public class EduTeacherController {
     private EduTeacherService teacherService;
 
     /**
+     * 修改讲师
+     */
+    @PostMapping("/updateTeacher")
+    public result updateTeacher(@RequestBody EduTeacher teacher){
+        boolean update = teacherService.updateById(teacher);
+        if (update){
+            return result.ok();
+        }else {
+            return result.error();
+        }
+    }
+
+    /**
      * 讲师查询所有
      *
      * @return
@@ -184,33 +197,13 @@ public class EduTeacherController {
             @PathVariable String id) {
 
         EduTeacher teacher = teacherService.getById(id);
-        return result.ok().data("item", teacher);
+        System.out.println(teacher);
+        System.out.println("111111111111");
+        return result.ok().data("teacher", teacher);
 
     }
 
-    /**
-     * 根据ID修改讲师
-     *
-     * @param id
-     * @param teacher
-     * @return
-     */
-    @ApiOperation(value = "根据ID修改讲师")
-    @PutMapping("updateById/{id}")
-    public result updateById(
-            @ApiParam(name = "id", value = "讲师ID", required = true)
-            @PathVariable String id,
-            @ApiParam(name = "teacher", value = "讲师对象", required = true)
-            @RequestBody EduTeacher teacher) {
 
-        teacher.setId(id);
-        boolean flag = teacherService.updateById(teacher);
-        if (flag) {
-            return result.ok();
-        } else {
-            return result.error();
-        }
-    }
 
 
 }
