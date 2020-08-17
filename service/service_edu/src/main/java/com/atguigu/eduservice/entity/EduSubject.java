@@ -35,7 +35,6 @@ public class EduSubject implements Serializable {
     private String title;
 
     @ApiModelProperty(value = "父ID")
-    @TableId(value = "parent_id", type = IdType.ID_WORKER_STR)
     private String parentId;
 
     @ApiModelProperty(value = "排序字段")
