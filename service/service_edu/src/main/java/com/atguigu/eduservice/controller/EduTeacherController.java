@@ -5,7 +5,6 @@ import com.atguigu.commonutils.result;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.vo.TeacherQuery;
 import com.atguigu.eduservice.service.EduTeacherService;
-import com.atguigu.servicebase.exceptionhandler.GuLiException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -58,11 +57,6 @@ public class EduTeacherController {
     @GetMapping("findAll")
     public result list() {
         List<EduTeacher> list = teacherService.list(null);
-        try {
-            int i = 1/0;
-        } catch (Exception e) {
-            throw new GuLiException(20001,"自定义异常");
-        }
         return result.ok().data("items", list);
     }
 
