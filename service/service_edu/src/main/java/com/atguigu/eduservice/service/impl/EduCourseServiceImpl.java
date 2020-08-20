@@ -32,7 +32,6 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
         //1 向课程表添加课程基本信息
         //CourseInfoVo对象转换eduCourse对象
-        System.out.println(courseInfoVo);
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoVo,eduCourse);
         int insert = baseMapper.insert(eduCourse);
@@ -53,6 +52,51 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseDescriptionService.save(courseDescription);
 
         return cid;
+    }
+
+    /**
+     * 根据课程查询基本信息
+     */
+    @Override
+    public CourseInfoVo getCourseInfo(String courseId) {
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        //先查询课程表
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        //查询描述表
+        EduCourseDescription courseDescription = courseDescriptionService.getById(courseId);
+        BeanUtils.copyProperties(eduCourse,courseInfoVo);
+        BeanUtils.copyProperties(courseDescription,courseInfoVo);
+        return courseInfoVo;
+    }
+
+    /**
+     * 更新课程查询基本信息
+     */
+    @Override
+    public void updateCourseInfo(CourseInfoVo courseInfoVo) {
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfoVo,eduCourse);
+        int update = baseMapper.updateById(eduCourse);
+        if (update==0){
+            throw new GuLiException(20001,"修改课程失败");
+        }
+        EduCourseDescription eduCourseDescription = new EduCourseDescription();
+        BeanUtils.copyProperties(courseInfoVo,eduCourseDescription);
+        courseDescriptionService.updateById(eduCourseDescription);
+    }
+
+    /**
+     * 根据课程id查询基本信息
+     */
+    public CourseInfoVo getCourseInfoByCourseId(String courseId) {
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        //先查询课程表
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        //查询描述表
+        EduCourseDescription courseDescription = courseDescriptionService.getById(courseId);
+        BeanUtils.copyProperties(eduCourse,courseInfoVo);
+        BeanUtils.copyProperties(courseDescription,courseInfoVo);
+        return courseInfoVo;
     }
 
 
