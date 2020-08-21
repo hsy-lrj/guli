@@ -31,55 +31,61 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     @Autowired
     private EduVideoService eduVideoService;
 
+    /**
+     * 根据id查询课程大纲列表
+     * @param courseId
+     * @return
+     */
     @Override
     public List<ChapterVo> getChapterVideoByCourseId(String courseId) {
-        //先获取所有的章节
-        QueryWrapper<EduChapter> chapterQueryWrapper = new QueryWrapper<>();
-        chapterQueryWrapper.eq("course_id",courseId);
-        List<EduChapter> eduChapters = this.baseMapper.selectList(chapterQueryWrapper);
-        //在获取所有的小节
-        QueryWrapper<EduVideo> videoQueryWrapper = new QueryWrapper<>();
-        videoQueryWrapper.eq("course_id",courseId);
-        List<EduVideo> eduVideoList = eduVideoService.list(videoQueryWrapper);
 
-        //创建所有章节和小节的集合
-        List<ChapterVo> allChapterVideoList = new ArrayList<>();
-        //遍历所有章节
-        for (EduChapter eduChapter:eduChapters
-             ) {
-            //将所有章节加入总的集合
+        //最终要的到的数据列表
+        ArrayList<ChapterVo> chapterVoArrayList = new ArrayList<>();
+
+        //获取章节信息
+        QueryWrapper<EduChapter> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("course_id", courseId);
+        queryWrapper1.orderByAsc("sort", "id");
+        List<EduChapter> chapters = baseMapper.selectList(queryWrapper1);
+
+        //获取课时信息
+        QueryWrapper<EduVideo> queryWrapper2 = new QueryWrapper<>();
+        queryWrapper2.eq("course_id", courseId);
+        queryWrapper2.orderByAsc("sort", "id");
+        List<EduVideo> videos = eduVideoService.list(queryWrapper2);
+
+        //填充章节vo数据
+        int count1 = chapters.size();
+        for (int i = 0; i < count1; i++) {
+            EduChapter chapter = chapters.get(i);
+
+            //创建章节vo对象
             ChapterVo chapterVo = new ChapterVo();
-            BeanUtils.copyProperties(eduChapter,chapterVo);
-            allChapterVideoList.add(chapterVo);
-            //将小节加入到对应的章节中
-            List<VideoVo> videoVoList = new ArrayList<>();
-            for (EduVideo eduVido:eduVideoList
-                 ) {
-                if(eduVido.getCourseId().equals(eduChapter.getCourseId())){
+            BeanUtils.copyProperties(chapter, chapterVo);
+            chapterVoArrayList.add(chapterVo);
+
+            //填充课时vo数据
+            ArrayList<VideoVo> videoVoArrayList = new ArrayList<>();
+            int count2 = videos.size();
+            for (int j = 0; j < count2; j++) {
+
+                EduVideo video = videos.get(j);
+                if(chapter.getId().equals(video.getChapterId())){
+
+                    //创建课时vo对象
                     VideoVo videoVo = new VideoVo();
-                    BeanUtils.copyProperties(eduVido,videoVo);
-                    videoVoList.add(videoVo);
+                    BeanUtils.copyProperties(video, videoVo);
+                    videoVoArrayList.add(videoVo);
                 }
             }
-            chapterVo.setVideoVoList(videoVoList);
-            //allChapterVideoList.add(chapterVo);
-        }
-        System.out.println(allChapterVideoList);
-        return allChapterVideoList;
-    }
-
-    @Override
-    public boolean removeChapterById(String id) {
-
-        //根据id查询是否存在视频，如果有则提示用户尚有子节点
-        if(eduVideoService.getCountByChapterId(id)){
-            throw new GuLiException(20001,"该分章节下存在视频课程，请先删除视频课程");
+            chapterVo.setVideoVoList(videoVoArrayList);
         }
 
-        Integer result = baseMapper.deleteById(id);
-        return null != result && result > 0;
+        return chapterVoArrayList;
     }
 
+
+    //根据id删除章节
     @Override
     public boolean deleteChapterById(String chapterId) {
 
@@ -88,7 +94,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         wrapper.eq("chapter_id",chapterId);
         int count = eduVideoService.count(wrapper);
         if(count>0){//有小节
-            throw new GuLiException(20001,"章节中包含小节，不能删除");
+            throw new GuLiException(20001,"该分章节下存在视频课程，请先删除视频课程");
         }else {//没有小节
             int i = baseMapper.deleteById(chapterId);
             return i>0;

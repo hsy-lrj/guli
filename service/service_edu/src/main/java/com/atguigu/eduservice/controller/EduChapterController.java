@@ -39,7 +39,7 @@ public class EduChapterController {
     }
 
     /**
-     * 添加小节
+     * 添加章节
      * @param eduChapter
      * @return
      */
@@ -65,7 +65,7 @@ public class EduChapterController {
      * @param eduChapter
      * @return
      */
-    @PutMapping("updateChapterById")
+    @PostMapping("/updateChapterById")
     public result updateChapterById(@RequestBody EduChapter eduChapter){
         boolean b = eduChapterService.updateById(eduChapter);
         return result.ok();
@@ -76,7 +76,7 @@ public class EduChapterController {
      * @param chapterId
      * @return
      */
-    @DeleteMapping("deleteChapterById/{chapterId}")
+    @DeleteMapping("/deleteChapterById/{chapterId}")
     public result deleteChapterById(@PathVariable String chapterId){
        boolean  flag = eduChapterService.deleteChapterById(chapterId);
        if (flag){

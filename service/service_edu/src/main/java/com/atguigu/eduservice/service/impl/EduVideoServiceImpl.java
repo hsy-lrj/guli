@@ -25,4 +25,5 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
         Integer count = baseMapper.selectCount(queryWrapper);
         return null != count && count > 0;
     }
+
 }
