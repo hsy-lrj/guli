@@ -49,11 +49,26 @@ public class EduVideoController {
         }
     }
 
-    //修改小节
+    /**
+     * 修改小节
+     * @param eduVideo
+     * @return
+     */
     @PostMapping("/updateVideoById")
     public result updateVideoById(@RequestBody EduVideo eduVideo){
         eduVideoService.updateById(eduVideo);
         return result.ok();
+    }
+
+    /**
+     * 根据id查询小节
+     * @param id
+     * @return
+     */
+    @GetMapping("/getVideoById/{id}")
+    public result getVideoById(@PathVariable String id){
+        EduVideo eduVideo = eduVideoService.getById(id);
+        return result.ok().data("eduVideo",eduVideo);
     }
 
 }

@@ -67,7 +67,7 @@ public class EduChapterController {
      */
     @PostMapping("/updateChapterById")
     public result updateChapterById(@RequestBody EduChapter eduChapter){
-        boolean b = eduChapterService.updateById(eduChapter);
+        eduChapterService.updateById(eduChapter);
         return result.ok();
     }
 
