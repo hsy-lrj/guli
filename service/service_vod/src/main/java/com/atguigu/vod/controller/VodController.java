@@ -3,10 +3,7 @@ package com.atguigu.vod.controller;
 import com.atguigu.commonutils.result;
 import com.atguigu.vod.service.VodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -24,6 +21,18 @@ public class VodController {
     public result uploadVideo(MultipartFile file){
        String videoId =  vodService.uploadVideo(file);
         return result.ok().data("videoId",videoId);
+    }
+
+    /**
+     * 删除视频
+     * @param videoId
+     * @return
+     */
+    @DeleteMapping("/removeVideo/{videoId}")
+    public result removeVideo(@PathVariable String videoId){
+
+        vodService.removeVideo(videoId);
+        return result.ok().message("视频删除成功");
     }
 
 }
