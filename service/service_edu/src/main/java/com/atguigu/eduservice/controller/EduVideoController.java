@@ -5,6 +5,7 @@ import com.atguigu.commonutils.result;
 import com.atguigu.eduservice.client.VodClient;
 import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.service.EduVideoService;
+import com.atguigu.servicebase.exceptionhandler.GuLiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -47,12 +48,14 @@ public class EduVideoController {
     @DeleteMapping("/deleteVideo/{id}")
     public result deleteVideo(@PathVariable String id){
         EduVideo eduVideo = eduVideoService.getById(id);
-        System.out.println(eduVideo);
         String videoSourceId = eduVideo.getVideoSourceId();
         System.out.println(videoSourceId);
         if (!StringUtils.isEmpty(videoSourceId)){
             //删除视频
-            vodClient.removeVideo(videoSourceId);
+            result result = vodClient.removeVideo(videoSourceId);
+            if (result.getCode()==20001){
+                throw new GuLiException(20001,"删除视频失败，熔断器。。。");
+            }
         }
         //删除小节
         eduVideoService.removeById(id);

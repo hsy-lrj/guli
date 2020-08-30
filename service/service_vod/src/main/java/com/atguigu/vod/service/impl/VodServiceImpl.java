@@ -11,11 +11,13 @@ import com.atguigu.servicebase.exceptionhandler.GuLiException;
 import com.atguigu.vod.service.VodService;
 import com.atguigu.vod.utils.AliyunVodSDKUtils;
 import com.atguigu.vod.utils.ConstantPropertiesUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class VodServiceImpl implements VodService
@@ -66,6 +68,32 @@ public class VodServiceImpl implements VodService
             DeleteVideoRequest request = new DeleteVideoRequest();
 
             request.setVideoIds(videoId);
+
+            DeleteVideoResponse response = client.getAcsResponse(request);
+
+            System.out.print("RequestId = " + response.getRequestId() + "\n");
+
+        }catch (ClientException e){
+            throw new GuLiException(20001, "视频删除失败");
+        }
+    }
+
+    /**
+     * 删除所有视频
+     * @param videoIdList
+     */
+    @Override
+    public void removeAllVideo(List videoIdList) {
+        try{
+            DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(
+                    ConstantPropertiesUtil.ACCESS_KEY_ID,
+                    ConstantPropertiesUtil.ACCESS_KEY_SECRET);
+
+            DeleteVideoRequest request = new DeleteVideoRequest();
+
+            //将videoIdList里面的内容转化成  1,2,3
+            String join = StringUtils.join(videoIdList.toArray(), ",");
+            request.setVideoIds(join);
 
             DeleteVideoResponse response = client.getAcsResponse(request);
 

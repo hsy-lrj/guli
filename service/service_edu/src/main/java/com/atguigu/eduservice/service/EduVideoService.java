@@ -16,4 +16,5 @@ public interface EduVideoService extends IService<EduVideo> {
     boolean getCountByChapterId(String id);
     //根据课程id删除小节
     void deleteVideoByCourseId(String courseId);
+
 }
