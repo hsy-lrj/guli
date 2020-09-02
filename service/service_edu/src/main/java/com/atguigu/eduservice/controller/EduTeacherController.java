@@ -191,8 +191,6 @@ public class EduTeacherController {
             @PathVariable String id) {
 
         EduTeacher teacher = teacherService.getById(id);
-        System.out.println(teacher);
-        System.out.println("111111111111");
         return result.ok().data("teacher", teacher);
 
     }

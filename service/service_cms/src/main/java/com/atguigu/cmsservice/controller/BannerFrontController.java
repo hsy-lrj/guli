@@ -5,6 +5,7 @@ import com.atguigu.cmsservice.entity.CrmBanner;
 import com.atguigu.cmsservice.service.CrmBannerService;
 import com.atguigu.commonutils.result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class BannerFrontController {
      * 查询所有的banner
      */
     @GetMapping("/getAllBanner")
+    @Cacheable(key = "'selectIndexList'",value = "banner")
     public result getAllBanner(){
       List<CrmBanner> bannerList =  bannerService.selectAllBanner();
       return result.ok().data("list",bannerList);

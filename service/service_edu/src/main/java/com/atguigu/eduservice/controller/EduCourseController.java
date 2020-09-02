@@ -53,7 +53,6 @@ public class EduCourseController {
     @GetMapping("/getCourseList")
     public result getCourseList(){
         List<EduCourse> list = eduCourseService.list(null);
-        System.out.println(list);
         return result.ok().data("list",list);
     }
     /**

@@ -7,6 +7,7 @@ import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/eduservice/indexfront")
+@CrossOrigin
 public class IndexFrontController {
 
 
@@ -34,14 +36,13 @@ public class IndexFrontController {
         QueryWrapper<EduCourse> eduCourseQueryWrapper = new QueryWrapper<>();
         eduCourseQueryWrapper.orderByDesc("id");
         eduCourseQueryWrapper.last("limit 8");
-        List<EduCourse> eduCourseList = courseService.list(eduCourseQueryWrapper);
+        List<EduCourse> eduCourseList = courseService.listEduCourse(eduCourseQueryWrapper);
 
         //前4个名师
         QueryWrapper<EduTeacher> eduTeacherQueryWrapper = new QueryWrapper<>();
-        eduCourseQueryWrapper.orderByAsc("id");
-        eduCourseQueryWrapper.last("limit 4");
-        List<EduTeacher> eduTeacherList = teacherService.list(eduTeacherQueryWrapper);
-
+        eduTeacherQueryWrapper.orderByAsc("id");
+        eduTeacherQueryWrapper.last("limit 4");
+        List<EduTeacher> eduTeacherList = teacherService.listeduTeacher(eduTeacherQueryWrapper);
         //返回数据
         return result.ok().data("eduCourseList",eduCourseList).data("eduTeacherList",eduTeacherList);
     }

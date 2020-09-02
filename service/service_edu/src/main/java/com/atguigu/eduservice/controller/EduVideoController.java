@@ -49,7 +49,6 @@ public class EduVideoController {
     public result deleteVideo(@PathVariable String id){
         EduVideo eduVideo = eduVideoService.getById(id);
         String videoSourceId = eduVideo.getVideoSourceId();
-        System.out.println(videoSourceId);
         if (!StringUtils.isEmpty(videoSourceId)){
             //删除视频
             result result = vodClient.removeVideo(videoSourceId);

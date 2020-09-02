@@ -3,7 +3,10 @@ package com.atguigu.eduservice.service;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +32,6 @@ public interface EduCourseService extends IService<EduCourse> {
 
     //根据课程id删除课程
     void removeCourse(String courseId);
+    //查询热门课程
+    List<EduCourse> listEduCourse(QueryWrapper<EduCourse> eduCourseQueryWrapper);
 }
