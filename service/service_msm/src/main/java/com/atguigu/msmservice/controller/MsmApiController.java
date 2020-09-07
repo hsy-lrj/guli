@@ -26,7 +26,7 @@ public class MsmApiController {
     /**
      * 发送短信的方法
      */
-    @GetMapping("/send/{phone}")
+    @GetMapping("/sendMsm/{phone}")
     public result sendMsm(@PathVariable String phone){
 
         //1.从redis中获取验证码，如果获取到直接返回

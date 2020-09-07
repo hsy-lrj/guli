@@ -96,4 +96,13 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         ucenterMember.setAvatar("https://guli-file-190513.oss-cn-beijing.aliyuncs.com/avatar/default.jpg");
         this.baseMapper.insert(ucenterMember);
     }
+
+    //判断数据库中是否存在扫描人信息，根据openid
+    @Override
+    public UcenterMember getOpenId(String openid) {
+        QueryWrapper<UcenterMember> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid",openid);
+        UcenterMember ucenterMember = baseMapper.selectOne(queryWrapper);
+        return ucenterMember;
+    }
 }
