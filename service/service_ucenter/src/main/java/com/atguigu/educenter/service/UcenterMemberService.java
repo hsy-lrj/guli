@@ -19,4 +19,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     void register(RegisterVo registerVo);
     //判断数据库中是否存在扫描人信息，根据openid
     UcenterMember getOpenId(String openid);
+    //根据日期查询注册人数
+    int CountRegisterDay(String day);
 }

@@ -1,13 +1,13 @@
 package com.atguigu.eduservice.service.impl;
 
 import com.atguigu.eduservice.entity.EduChapter;
+import com.atguigu.eduservice.mapper.EduChapterMapper;
+import com.atguigu.eduservice.service.EduChapterService;
+import com.atguigu.servicebase.exceptionhandler.GuLiException;
 import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.entity.chapter.VideoVo;
-import com.atguigu.eduservice.mapper.EduChapterMapper;
-import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduVideoService;
-import com.atguigu.servicebase.exceptionhandler.GuLiException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;

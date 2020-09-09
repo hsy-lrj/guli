@@ -2,11 +2,13 @@ package com.atguigu.educenter.controller;
 
 
 import com.atguigu.commonutils.JwtUtils;
+import com.atguigu.commonutils.ordervo.UcenterMemberOrder;
 import com.atguigu.commonutils.result;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
 import com.atguigu.servicebase.exceptionhandler.GuLiException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +48,9 @@ public class UcenterMemberController {
         return result.ok();
     }
 
+    /**
+     *根据token获取用户信息
+     */
     @GetMapping("/getMemberInfo")
     public result getMemberInfo(HttpServletRequest request){
         try {
@@ -58,6 +63,27 @@ public class UcenterMemberController {
             e.printStackTrace();
             throw new GuLiException(20001,"error");
         }
+    }
+
+    /**
+     * 根据用户id获取用户信息
+     */
+    @PostMapping("/getUserInfoOrder/{id}")
+    public UcenterMemberOrder getUserInfoOrder(@PathVariable String id){
+        UcenterMember ucenterMember = ucenterMemberService.getById(id);
+        //把ucenterMember里面的值赋值给UcenterMemberOrder
+        UcenterMemberOrder ucenterMemberOrder = new UcenterMemberOrder();
+        BeanUtils.copyProperties(ucenterMember,ucenterMemberOrder);
+        return ucenterMemberOrder;
+    }
+
+    /**
+     * 根据日期查询注册人数
+     */
+    @GetMapping("/CountRegister/{day}")
+    public result CountRegister(@PathVariable String day){
+       int count = ucenterMemberService.CountRegisterDay(day);
+        return result.ok().data("count",count);
     }
 
 }
