@@ -4,10 +4,7 @@ package com.atguigu.staservice.controller;
 import com.atguigu.commonutils.result;
 import com.atguigu.staservice.service.StatisticsDailyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/staservice/sta")
+@CrossOrigin
 public class StatisticsDailyController {
 
     @Autowired
