@@ -23,4 +23,5 @@ public class TeacherQuery implements Serializable {
 
     @ApiModelProperty(value = "查询结束时间", example = "2019-12-01 10:10:10")
     private String end;
+
 }
