@@ -1,13 +1,13 @@
-package com.atguigu.vod.controller;
+package com.atguigu.eduvod.controller;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.atguigu.commonutils.result;
 import com.atguigu.servicebase.exceptionhandler.GuLiException;
-import com.atguigu.vod.service.VodService;
-import com.atguigu.vod.utils.AliyunVodSDKUtils;
-import com.atguigu.vod.utils.ConstantPropertiesUtil;
+import com.atguigu.eduvod.service.VodService;
+import com.atguigu.eduvod.utils.AliyunVodSDKUtils;
+import com.atguigu.eduvod.utils.ConstantPropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

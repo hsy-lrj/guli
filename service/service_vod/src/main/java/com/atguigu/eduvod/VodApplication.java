@@ -1,4 +1,4 @@
-package com.atguigu.eduorder.vod;
+package com.atguigu.eduvod;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

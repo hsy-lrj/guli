@@ -1,4 +1,4 @@
-package com.atguigu.vod.utils;
+package com.atguigu.eduvod.utils;
 
 import com.aliyun.oss.ClientException;
 import com.aliyuncs.DefaultAcsClient;
