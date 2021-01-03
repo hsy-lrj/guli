@@ -38,7 +38,7 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
-        <!--服务注册-->
+        <!--服务发现的客户端：1、将自己的地址注册到服务发现中心。2、从服务发现中心获取服务列表-->
          <dependency>
              <groupId>org.springframework.cloud</groupId>
              <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
